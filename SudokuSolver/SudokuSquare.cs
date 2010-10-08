@@ -32,6 +32,14 @@ namespace SudokuSolver
 
         public IEnumerable<int> PossibleValues { get { return possibleValues; } }
 
+        public string PossibleValuesString
+        {
+            get
+            {
+                return string.Join(", ", possibleValues.Select(i => i.ToString()).ToArray());
+            }
+        }
+
         public int? Value
         {
             get
