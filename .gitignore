@@ -1,0 +1,7 @@
+*/bin/*
+*/obj/*
+TestResults/*
+Local.testsettings
+SudokuSolver.suo
+SudokuSolver.vsmdi
+TraceAndTestImpact.testsettings
