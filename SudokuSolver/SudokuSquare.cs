@@ -93,17 +93,30 @@ namespace SudokuSolver
         {
             if (value.HasValue)
             {
-                possibleValuesBackup.AddRange(possibleValues);
-                possibleValues.Clear();
-                possibleValues.Add(value.Value);
-                RaisePropertyChangedEvent("Value");
-                RaiseValueSetEvent(value.Value);
+                if (possibleValuesBackup.Count > 0)
+                {
+                    RaiseValueUnsetEvent(possibleValues[0]);
+                    possibleValuesBackup.Add(possibleValues[0]);
+                    possibleValuesBackup.Remove(value.Value);
+                    possibleValues.Clear();
+                    possibleValues.Add(value.Value);
+                    RaiseValueSetEvent(value.Value);
+                }
+                else
+                {
+                    possibleValuesBackup.AddRange(possibleValues);
+                    possibleValues.Clear();
+                    possibleValues.Add(value.Value);
+                    RaisePropertyChangedEvent("Value");
+                    RaiseValueSetEvent(value.Value);
+                }
             }
             else
             {
                 RaiseValueUnsetEvent(possibleValues[0]);
                 possibleValues.Clear();
                 possibleValues.AddRange(possibleValuesBackup);
+                possibleValuesBackup.Clear();
                 setByHand = false;
             }
         }

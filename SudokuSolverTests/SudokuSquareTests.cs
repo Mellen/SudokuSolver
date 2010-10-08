@@ -49,5 +49,24 @@ namespace SudokuSolverTests
             Assert.IsTrue(square1.PossibleValues.Contains(4));
             Assert.IsTrue(square2.PossibleValues.Contains(3));
         }
+
+        [TestMethod]
+        public void SwitchValueTest()
+        {
+            SudokuSquare square1 = new SudokuSquare(0, 0, 0);
+            SudokuSquare square2 = new SudokuSquare(0, 1, 0);
+
+            square1.ValueSet += square2.RemovePossibleValue;
+            square1.ValueUnset += square2.AddPossibleValue;
+            
+            square2.ValueSet += square1.RemovePossibleValue;
+            square2.ValueUnset += square1.AddPossibleValue;
+
+            square1.Value = 3;
+            Assert.IsFalse(square2.PossibleValues.Contains(3));
+            square1.Value = 4;
+            Assert.IsTrue(square2.PossibleValues.Contains(3));
+            Assert.IsFalse(square2.PossibleValues.Contains(4));
+        }
     }
 }
