@@ -161,6 +161,12 @@ namespace SudokuSolver
             {
                 possibleValuesBackup.Add(arg.Value);
             }
+            
+            if (Value != null)
+            {
+                RaisePropertyChangedEvent("Value");
+                RaiseValueSetEvent(Value.Value);
+            }
             RaisePropertyChangedEvent("PossibleValuesString");
         }
 

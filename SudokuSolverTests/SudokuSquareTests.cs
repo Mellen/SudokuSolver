@@ -68,5 +68,50 @@ namespace SudokuSolverTests
             Assert.IsTrue(square2.PossibleValues.Contains(3));
             Assert.IsFalse(square2.PossibleValues.Contains(4));
         }
+
+        [TestMethod]
+        public void MultipleValueSwitchTest()
+        {
+            SudokuSquare[] squares = new SudokuSquare[9];
+            for(int i = 0; i < 9; i++)
+            {
+                squares[i] = new SudokuSquare(0, 0, 0);
+            }
+            foreach (var square in squares)
+            {
+                var otherSquares = from s in squares
+                                   where s != square
+                                   select s;
+                foreach (var otherSquare in otherSquares)
+                {
+                    square.ValueSet += otherSquare.RemovePossibleValue;
+                    square.ValueUnset += otherSquare.AddPossibleValue;
+                }
+            }
+
+            squares[0].Value = 4;
+            squares[1].Value = 9;
+            squares[2].Value = 8;
+            squares[3].Value = 6;
+            squares[4].Value = 1;
+            squares[5].Value = 2;
+            squares[6].Value = 3;
+            squares[7].Value = 7;
+            squares[8].Value = 5;
+
+            squares[8].Value = 6;
+            squares[5].Value = 9;
+            squares[3].Value = null;
+            squares[1].Value = null;
+
+            Assert.IsTrue(squares[3].PossibleValues.Contains(2));
+            Assert.IsTrue(squares[3].PossibleValues.Contains(5));
+            Assert.IsTrue(squares[1].PossibleValues.Contains(2));
+            Assert.IsTrue(squares[1].PossibleValues.Contains(5));
+
+            squares[3].Value = 5;
+
+            Assert.AreEqual(2, squares[1].Value);
+        }
     }
 }
