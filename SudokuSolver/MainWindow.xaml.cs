@@ -56,7 +56,7 @@ namespace SudokuSolver
                 double bottomThickness = (square.Row == 2 || square.Row == 5) ? 2 : 0;
                 double rightThickness = (square.Column == 2 || square.Column == 5) ? 2 : 0;
                 sudokuSquare.Margin = new Thickness(0, 0, rightThickness, bottomThickness);
-                sudokuSquare.ToolTip = square.PossibleValuesString;
+                sudokuSquare.SetBinding(TextBox.ToolTipProperty, "PossibleValuesString");
             }
         }
 

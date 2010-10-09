@@ -56,8 +56,11 @@ namespace SudokuSolver
 
             set
             {
-                setByHand = true;
-                SetValue(value);
+                if ((value <= 9 && value > 0)||(value == null))
+                {
+                    setByHand = true;
+                    SetValue(value);
+                }
             }
         }
 
@@ -127,6 +130,7 @@ namespace SudokuSolver
                 possibleValuesBackup.Clear();
                 setByHand = false;
             }
+            RaisePropertyChangedEvent("PossibleValuesString");
         }
 
         public void RemovePossibleValue(object sender, ValueSetEventArgs arg)
@@ -144,6 +148,7 @@ namespace SudokuSolver
             {
                 possibleValuesBackup.Remove(arg.Value);
             }
+            RaisePropertyChangedEvent("PossibleValuesString");
         }
 
         public void AddPossibleValue(object sender, ValueSetEventArgs arg)
@@ -156,6 +161,7 @@ namespace SudokuSolver
             {
                 possibleValuesBackup.Add(arg.Value);
             }
+            RaisePropertyChangedEvent("PossibleValuesString");
         }
 
         public override string ToString()
