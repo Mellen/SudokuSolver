@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
 
 namespace SudokuSolver
 {
@@ -40,6 +41,10 @@ namespace SudokuSolver
     {
         public MainWindow()
         {
+            MemoryStream iconstream = new MemoryStream();
+            Properties.Resources.sudokusolver.Save(iconstream);
+            iconstream.Seek(0, SeekOrigin.Begin);
+            this.Icon = System.Windows.Media.Imaging.BitmapFrame.Create(iconstream);
             InitializeComponent();
             DataContext = new SudokuGrid();
             foreach (var square in (DataContext as SudokuGrid).Squares)
